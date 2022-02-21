@@ -1,4 +1,4 @@
-# test 1.
+# test du linter lol
 
 def hello_world():
     print ("Hello World")
