@@ -1,0 +1,14 @@
+name: linter_projet_final_python
+
+on: push
+
+jobs:
+  auto-lint:
+    name: Lint code base
+    runs-on: ubuntu-latest
+    steps:
+      - name: wemake-python-styleguide
+        uses: wemake-services/wemake-python-styleguide
+        env:
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
