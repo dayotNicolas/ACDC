@@ -13,3 +13,7 @@ jobs:
           reporter: 'github-pr-review'
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
+      - name: flakehell-linter
+        run: |
+          pip install flakehell
+          flakehell lint
