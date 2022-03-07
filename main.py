@@ -1,8 +1,9 @@
-#test du linter lol
+# test du linter lol
 
 def hello_world():
-    print ( "Hello World" )
-    
+    print("Hello World")
+
+
 hello_world()
 a =5;
 b= 2
