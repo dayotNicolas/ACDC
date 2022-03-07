@@ -15,7 +15,12 @@ name: Lint Code Base
 # Start the job on all push #
 #############################
 on:
-  push
+    push:
+      branches:
+        - main
+    pull_request:
+      branches:
+        - main
 
 ###############
 # Set the Job #
