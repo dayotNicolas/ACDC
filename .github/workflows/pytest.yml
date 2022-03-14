@@ -8,7 +8,7 @@ on:
       - main
 
 env:
-  PYTHONPATH: ${{ GITHUB.WORKSPACE }}/projet_ACDC
+  PYTHONPATH: ${{ GITHUB.WORKSPACE }}/
 
 jobs:
   build:
