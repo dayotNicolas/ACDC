@@ -29,13 +29,14 @@
 from typing import Optional
 from fastapi import FastAPI
 import sqlalchemy
+from pandas import jsonify
 
 app = FastAPI()
 
 
 @app.get("/")
-def read_root():
-    return {"Hello": "World"}
+def home():
+    return jsonify({"Hello": "World"})
 
 
 @app.get("/items/{item_id}")
