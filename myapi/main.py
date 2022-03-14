@@ -30,8 +30,20 @@ from typing import Optional
 from fastapi import FastAPI
 import sqlalchemy
 import jsonify
+from typing import Optional
+from pydantic import BaseModel
+
 
 app = FastAPI()
+
+
+class Department(BaseModel):
+    department_id: int
+    name: str
+
+
+async def create_contact(department: Department):
+    return department
 
 
 @app.get("/")
@@ -39,6 +51,9 @@ def home():
     return {"Hello": "World"}
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Optional[str] = None):
-    return {"item_id": item_id, "q": q}
+@app.get("/department/{department_id}")
+def department_details(department_id: int, page: Optional[int] = 1):
+    if page:
+        return {'department_id': department_id, 'page': page}
+    return {'department_id': department_id}
+
