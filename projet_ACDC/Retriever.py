@@ -1,6 +1,12 @@
 import urllib.request
 import csv, json
 
+urlMainFile = "https://www.data.gouv.fr/fr/organizations/sante-publique-france/datasets-resources.csv"
+MainCsvFilePath = "datas/CSV/mainCsv.csv"
+urllib.request.urlretrieve(urlMainFile, MainCsvFilePath)
+
+# todo : manipuler le main file csv pour récupérer les urls des fichiers qui nous interesses et construire le dict urlList avec.
+
 urlList = {
     "https://static.data.gouv.fr/resources/indicateurs-de-lactivite-epidemique-taux-dincidence-de-lepidemie-de-covid-19-par-metropole/20220307-191013/sg-metro-opendata-2022-03-07-19h10.csv" : "datas/CSV/sg-metro-opendata-2022-03-07-19h10.csv",
     "https://static.data.gouv.fr/resources/donnees-relatives-aux-personnes-vaccinees-contre-la-covid-19-1/20220311-190146/vacsi-v-dep-2022-03-11-19h01.csv" : "datas/CSV/vacsi-v-dep-2022-03-11-19h01.csv",
