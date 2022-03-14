@@ -1,4 +1,4 @@
 
 
 def add(n, m):
-    return m * n
+    return m + n

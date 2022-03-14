@@ -1,4 +1,4 @@
-import add_function
+from projet_ACDC.add_function import add
 
 def test_add():
-    assert add_function.add(3, 5) == 8
+    assert add(3, 5) == 8
