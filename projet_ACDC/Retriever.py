@@ -11,7 +11,6 @@ urllib.request.urlretrieve(urlMainFile, MainCsvFilePath)
 # todo : manipuler le main file csv pour récupérer les urls des fichiers qui nous interesses et construire le dict urlList avec.
 with open(MainCsvFilePath) as csvFile:
     csvReader = csv.reader(csvFile, delimiter=';')
-    ListFiles = []
     ListMatchToSort1 = []
     ListMatchToSort2 = []
     ListMatchToSort3 = []
