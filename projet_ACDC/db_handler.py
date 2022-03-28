@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, ForeignKey
 
-engine = create_engine('sqlite:///NOM.db', echo=True)
+engine = create_engine('sqlite:///covid.db', echo=True)
 meta = MetaData()
 
 departments = Table(
