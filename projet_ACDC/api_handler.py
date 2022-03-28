@@ -12,7 +12,7 @@ with open("[LIEN DU CSV].csv", "r") as f:
     csv_reader = csv.DictReader(f)
 
     for row in csv_reader:
-        db_record = models.Record(
+        db_record = models.Departments(
             id=row["id"],
             name=row["name"],
             department_number=row['department_number'],
