@@ -1,4 +1,8 @@
+apscheduler==3.9.1
 fastapi==0.75.0
+fastapi_sqlalchemy==0.2.1
 jsonify==0.5
 pydantic==1.9.0
+pytest==7.0.1
+pytz==2020.4
 SQLAlchemy==1.4.32
