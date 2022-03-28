@@ -1,5 +1,6 @@
 import urllib.request
-import csv, json
+import csv
+import json
 import re
 
 urlMainFile = "https://www.data.gouv.fr/fr/organizations/sante-publique-france/datasets-resources.csv"
@@ -8,7 +9,8 @@ urllib.request.urlretrieve(urlMainFile, MainCsvFilePath)
 
 # todo : test si le fichier de csv principal est déja stocké, et l'effacer si c est le cas
 
-# todo : manipuler le main file csv pour récupérer les urls des fichiers qui nous interesses et construire le dict urlList avec.
+# todo : manipuler le main file csv pour récupérer les urls des fichiers qui nous interesses et construire le dict
+#  urlList avec.
 with open(MainCsvFilePath) as csvFile:
     csvReader = csv.reader(csvFile, delimiter=';')
     ListMatchToSort1 = []
@@ -18,24 +20,29 @@ with open(MainCsvFilePath) as csvFile:
     ListMatchToSort5 = []
     ListMatchToSort6 = []
     for row in csvReader:
-        if re.search("indicateurs-de-lactivite-epidemique-taux-dincidence-de-lepidemie-de-covid-19-par-metropole.*sg-metro-opendata",row[9]) is not None:
+        if re.search(
+                "indicateurs-de-lactivite-epidemique-taux-dincidence-de-lepidemie-de-covid-19-par-metropole.*sg-metro"
+                "-opendata",
+                row[9]) is not None:
             splitTitle = row[10].split('-')
             if len(splitTitle) == 7:
                 ListMatchToSort1.append(row[9])
 
-        if re.search("donnees-relatives-aux-personnes-vaccinees-contre-la-covid-19-1.*vacsi-v-dep",row[9]) is not None:
+        if re.search("donnees-relatives-aux-personnes-vaccinees-contre-la-covid-19-1.*vacsi-v-dep", row[9]) is not None:
             ListMatchToSort2.append(row[9])
 
-        if re.search("donnees-relatives-aux-personnes-vaccinees-contre-la-covid-19-1.*vacsi-v-fra",row[9]) is not None:
+        if re.search("donnees-relatives-aux-personnes-vaccinees-contre-la-covid-19-1.*vacsi-v-fra", row[9]) is not None:
             ListMatchToSort3.append(row[9])
-        
-        if re.search("donnees-hospitalieres-relatives-a-lepidemie-de-covid-19.*covid-hosp-ad-age",row[9]) is not None:
+
+        if re.search("donnees-hospitalieres-relatives-a-lepidemie-de-covid-19.*covid-hosp-ad-age", row[9]) is not None:
             ListMatchToSort4.append(row[9])
 
-        if re.search("donnees-de-vaccination-relatives-aux-professionnels-et-resident-en-ehpad-et-usld.*vacsi-prof-dep",row[9]) is not None:
+        if re.search("donnees-de-vaccination-relatives-aux-professionnels-et-resident-en-ehpad-et-usld.*vacsi-prof-dep",
+                     row[9]) is not None:
             ListMatchToSort5.append(row[9])
 
-        if re.search("donnees-de-certification-electronique-des-deces-associes-au-covid-19-cepidc.*covid-cedc-quot",row[9]) is not None:
+        if re.search("donnees-de-certification-electronique-des-deces-associes-au-covid-19-cepidc.*covid-cedc-quot",
+                     row[9]) is not None:
             ListMatchToSort6.append(row[9])
 
     urlList = {}
@@ -62,16 +69,16 @@ with open(MainCsvFilePath) as csvFile:
 # }
 
 JsonDict = {
-    "datas/CSV/sg-metro-opendata.csv" : "datas/JSON/evolution_taux_incidence.json",
-    "datas/CSV/vacsi-v-dep.csv" : "datas/JSON/vaccin_cage_date.json",
-    "datas/CSV/vacsi-v-fra.csv" : "datas/JSON/vaccin_date.json",
-    "datas/CSV/covid-hosp-ad-age.csv" : "datas/JSON/hospitalisation_age.json",
-    "datas/CSV/vacsi-prof-dep.csv" : "datas/JSON/vaccin_pro_poucentage_dep.json",
-    "datas/CSV/covid-cedc-quot.csv" : "datas/JSON/deces_age_region.json"
+    "datas/CSV/sg-metro-opendata.csv": "datas/JSON/evolution_taux_incidence.json",
+    "datas/CSV/vacsi-v-dep.csv": "datas/JSON/vaccin_cage_date.json",
+    "datas/CSV/vacsi-v-fra.csv": "datas/JSON/vaccin_date.json",
+    "datas/CSV/covid-hosp-ad-age.csv": "datas/JSON/hospitalisation_age.json",
+    "datas/CSV/vacsi-prof-dep.csv": "datas/JSON/vaccin_pro_poucentage_dep.json",
+    "datas/CSV/covid-cedc-quot.csv": "datas/JSON/deces_age_region.json"
 }
 
 for cle, valeur in urlList.items():
-   urllib.request.urlretrieve(cle, valeur)
+    urllib.request.urlretrieve(cle, valeur)
 
 
 def takeCSVMakeJSON(CSVPath, JSONPath):
@@ -79,16 +86,17 @@ def takeCSVMakeJSON(CSVPath, JSONPath):
     with open(CSVPath) as csvFile:
         if CSVPath == "datas/CSV/sg-metro-opendata-2022-03-07-19h10.csv":
             csvReader = csv.DictReader(csvFile, delimiter=',')
-        else :
+        else:
             csvReader = csv.DictReader(csvFile, delimiter=';')
         id = 0
         for rows in csvReader:
-            #print(rows)
+            # print(rows)
             data[id] = rows
             id += 1
 
     with open(JSONPath, 'w') as jsonFile:
         jsonFile.write(json.dumps(data, indent=4))
+
 
 for cle, valeur in JsonDict.items():
     takeCSVMakeJSON(cle, valeur)
