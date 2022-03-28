@@ -1,4 +1,4 @@
-import csv
+import json
 import datetime
 
 from app import models
@@ -8,10 +8,11 @@ db = SessionLocal()
 
 models.Base.metadata.create_all(bind=engine)
 
-with open("[LIEN DU CSV].csv", "r") as f:
-    csv_reader = csv.DictReader(f)
+# Opening JSON file
+with open('data.json') as json_file:
+    data = json.load(json_file)
 
-    for row in csv_reader:
+    for row in data:
         db_record = models.Departments(
             id=row["id"],
             name=row["name"],
