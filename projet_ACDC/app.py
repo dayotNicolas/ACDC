@@ -1,59 +1,41 @@
-"""
-* To install FastApi
--> pip install fastapi
+from typing import List
 
-* To install ASGI server
--> pip install "uvicorn[standard]"
+from fastapi import Depends, FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy.orm import Session
+from starlette.responses import RedirectResponse
 
-* To install SQLAlchemy
--> pip install SQLAlchemy
+from . import models, schemas
+from .database import SessionLocal, engine
 
-* To install scrapy
--> pip install scrapy
-
-* To run uvicorn server
--> uvicorn main:app --reload
-    The command uvicorn main:app refers to:
-       - main: the file app.py (the Python "module").
-       - app: the object created inside of app.py with the line app = FastAPI().
-       - --reload: make the server restart after code changes. Only do this for development.
-
-* Access to generate doc
--> http://127.0.0.1:8000/docs.
-
-* Package to install :
-    - FastAPI
-    - sqlalchemy
-"""
-
-from typing import Optional
-from fastapi import FastAPI
-import sqlalchemy
-import jsonify
-from typing import Optional
-from pydantic import BaseModel
-
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
 
-class Department(BaseModel):
-    department_id: int
-    name: str
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+    allow_credentials=True,
+)
 
-
-async def create_contact(department: Department):
-    return department
+# Dependency
+def get_db():
+    try:
+        db = SessionLocal()
+        yield db
+    finally:
+        db.close()
 
 
 @app.get("/")
-def home():
-    return {"Hello": "World"}
+def main():
+    return RedirectResponse(url="/docs/")
 
 
-@app.get("/department/{department_id}")
-def department_details(department_id: int, page: Optional[int] = 1):
-    if page:
-        return {'department_id': department_id, 'page': page}
-    return {'department_id': department_id}
-
+@app.get("/departments/", response_model=List[schemas.Departments])
+def show_records(db: Session = Depends(get_db)):
+    departments = db.query(models.Departments).all()
+    return departments
