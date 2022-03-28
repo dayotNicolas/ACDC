@@ -9,7 +9,7 @@ db = SessionLocal()
 models.Base.metadata.create_all(bind=engine)
 
 # Opening JSON file
-with open('data.json') as json_file:
+with open('dataset/data.json') as json_file:
     data = json.load(json_file)
 
     for row in data:
