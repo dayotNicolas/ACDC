@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from starlette.responses import RedirectResponse
 import models
 import schemas
-from .database import SessionLocal, engine
+from database import SessionLocal, engine
 
 models.Base.metadata.create_all(bind=engine)
 
