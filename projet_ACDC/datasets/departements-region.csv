@@ -1,4 +1,4 @@
-num_dep,dep_name,region_name
+department_number,name,region_name
 01,Ain,Auvergne-Rhône-Alpes
 02,Aisne,Hauts-de-France
 03,Allier,Auvergne-Rhône-Alpes
