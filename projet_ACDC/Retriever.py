@@ -9,8 +9,6 @@ urllib.request.urlretrieve(urlMainFile, MainCsvFilePath)
 
 # todo : test si le fichier de csv principal est déja stocké, et l'effacer si c est le cas
 
-# todo : manipuler le main file csv pour récupérer les urls des fichiers qui nous interesses et construire le dict
-#  urlList avec.
 with open(MainCsvFilePath) as csvFile:
     csvReader = csv.reader(csvFile, delimiter=";")
     ListMatchToSort1 = []
@@ -122,7 +120,6 @@ def takeCSVMakeJSON(CSVPath, JSONPath):
             csvReader = csv.DictReader(csvFile, delimiter=";")
         id = 0
         for rows in csvReader:
-            # print(rows)
             data[id] = rows
             id += 1
 

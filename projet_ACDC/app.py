@@ -1,12 +1,14 @@
 from typing import List
 
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from starlette.responses import RedirectResponse
 import models
 import schemas
 from database import SessionLocal, engine
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -20,6 +22,7 @@ app.add_middleware(
     allow_credentials=True,
 )
 
+templates = Jinja2Templates(directory="templates")
 
 # Dependency
 def get_db():
@@ -39,3 +42,12 @@ def main():
 def show_records(db: Session = Depends(get_db)):
     departments = db.query(models.Departments).all()
     return departments
+
+@app.get("/plots/", response_class=HTMLResponse)
+def read_notes(request: Request, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    departments = db.query(models.Departments).all()
+    print(departments)
+    return templates.TemplateResponse("plots.html",{
+        "request": request,
+        "departments": departments
+    })
