@@ -41,10 +41,10 @@ def main():
     return RedirectResponse(url="/docs/")
 
 
-@app.get("/departments/", response_model=List[schemas.Departments])
+@app.get("/departments/", response_model=List[schemas.Region])
 def show_records(db: Session = Depends(get_db)):
-    departments = db.query(models.Departments).all()
-    return departments
+    Region = db.query(models.Region).all()
+    return Region
 
 
 @app.get("/plots/", response_class=HTMLResponse)

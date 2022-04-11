@@ -4,7 +4,7 @@ from database import Base
 
 
 class Region(Base):
-    __tablename__ = "region"
+    __tablename__ = "Region"
 
     id = Column(Integer, primary_key=True, index=True)
     region_number = Column(String(10))
@@ -14,6 +14,7 @@ class Region(Base):
 class HospitalisationAge(Base):
     __tablename__ = "hospitalisationAge"
 
+    id = Column(Integer, primary_key=True, index=True)
     region_id = Column(Integer, ForeignKey("Region.id"), index=True)
     week = Column(String(255))
     cl_age90 = Column(Integer)
@@ -23,6 +24,7 @@ class HospitalisationAge(Base):
 class DeathAgeRegion(Base):
     __tablename__ = "deathAgeRegion"
 
+    id = Column(Integer, primary_key=True, index=True)
     region_id = Column(Integer, ForeignKey("Region.id"), index=True)
     cl_age90 = Column(Integer)
     deaths_covid = Column(Integer)
@@ -32,6 +34,7 @@ class DeathAgeRegion(Base):
 class ProfessionalVaccinPercentageDepartment(Base):
     __tablename__ = "ProfessionalVaccinPercentageDepartment"
 
+    id = Column(Integer, primary_key=True, index=True)
     region_id = Column(Integer, ForeignKey("Region.id"), index=True)
     date = Column(Date)
     dose1 = Column(Float)
@@ -42,6 +45,7 @@ class ProfessionalVaccinPercentageDepartment(Base):
 class VaccinationRate(Base):
     __tablename__ = "VaccinationRate"
 
+    id = Column(Integer, primary_key=True, index=True)
     region_id = Column(Integer, ForeignKey("Region.id"), index=True)
     vaccin_number = Column(Integer)
     date = Column(Date)

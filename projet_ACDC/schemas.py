@@ -12,6 +12,7 @@ class Region(BaseModel):
 
 
 class HospitalisationAge(BaseModel):
+    id: int
     region_id: int
     week: str
     cl_age90: int
@@ -22,6 +23,7 @@ class HospitalisationAge(BaseModel):
 
 
 class DeathAgeRegion(BaseModel):
+    id: int
     region_id: int
     cl_age90: int
     deaths_covid: int
@@ -32,6 +34,7 @@ class DeathAgeRegion(BaseModel):
 
 
 class ProfessionalVaccinPercentageDepartment(BaseModel):
+    id: int
     region_id: int
     date: datetime.date
     dose1: float
@@ -43,6 +46,7 @@ class ProfessionalVaccinPercentageDepartment(BaseModel):
 
 
 class VaccinationRate(BaseModel):
+    id: int
     region_id: int
     vaccin_number: int
     date: datetime.date
