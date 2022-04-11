@@ -10,6 +10,7 @@ import schemas
 from database import SessionLocal, engine
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
+from api_handler import *
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -54,6 +55,11 @@ def read_notes(request: Request, skip: int = 0, limit: int = 100, db: Session = 
         "request": request,
         "departments": departments
     })
+
+
+@app.post("/deaths_data/")
+def put_data_in_db():
+    middleware_deces_age()
 
 
 if __name__ == "__main__":

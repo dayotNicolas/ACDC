@@ -4,28 +4,23 @@ import datetime
 from app import models
 from database import SessionLocal, engine
 
-db = SessionLocal()
 
-models.Base.metadata.create_all(bind=engine)
 
-# Opening JSON file
-with open('dataset/data.json') as json_file:
-    data = json.load(json_file)
+def middleware_deces_age():
+    db = SessionLocal()
 
-    for row in data:
-        db_record = models.Departments(
-            id=row["id"],
-            name=row["name"],
-            department_number=row['department_number'],
-            cases=row["cases"],
-            deaths=row["deaths"],
-            icu_occupation=row['icu_occupation'],
-            vaccination_rate=row['vaccination_rate'],
-            positivity_rate=row['positivity_rate'],
-            date=row['date']
-        )
-        db.add(db_record)
+    models.Base.metadata.create_all(bind=engine)
+    with open('datas/JSON/deces_age_region.json') as json_file:
+        data = json.load(json_file)
 
-    db.commit()
+        for row, value in data:
+            db_record = models.DeathAgeRegion(
+                region_id=row.value["reg"],
+                cl_age90=row.value["cl_age90"],
+                deaths_covid=row.value["Dc_Elec_Covid_cum"],
+                date=row.value["jour"]
+            )
+            db.add(db_record)
+        db.commit()
 
-db.close()
+    db.close()

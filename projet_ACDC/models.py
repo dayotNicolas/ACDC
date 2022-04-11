@@ -3,20 +3,6 @@ from sqlalchemy.types import Date
 from database import Base
 
 
-class Departments(Base):
-    __tablename__ = "departments"
-
-    region_id = Column(Integer, ForeignKey("Region.id"), index=True)
-    name = Column(String(255))
-    department_number = Column(String(255), index=True)
-    cases = Column(Integer)
-    deaths = Column(Integer)
-    icu_occupation = Column(Integer)
-    vaccination_rate = Column(Integer)
-    positivity_rate = Column(Integer)
-    date = Column(Date)
-
-
 class Region(Base):
     __tablename__ = "region"
 
