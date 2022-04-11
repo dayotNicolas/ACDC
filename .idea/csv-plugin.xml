@@ -3,6 +3,13 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="\projet_ACDC\datas\CSV\sg-metro-opendata.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\projet_ACDC\datasets\departements-region.csv">
           <value>
             <Attribute>

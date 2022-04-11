@@ -1,5 +1,6 @@
 from typing import List
 
+import uvicorn
 from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
@@ -24,6 +25,7 @@ app.add_middleware(
 
 templates = Jinja2Templates(directory="templates")
 
+
 # Dependency
 def get_db():
     try:
@@ -43,11 +45,16 @@ def show_records(db: Session = Depends(get_db)):
     departments = db.query(models.Departments).all()
     return departments
 
+
 @app.get("/plots/", response_class=HTMLResponse)
 def read_notes(request: Request, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     departments = db.query(models.Departments).all()
     print(departments)
-    return templates.TemplateResponse("plots.html",{
+    return templates.TemplateResponse("plots.html", {
         "request": request,
         "departments": departments
     })
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=9856)

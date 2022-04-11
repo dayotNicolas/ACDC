@@ -21,7 +21,8 @@ with open('dataset/data.json') as json_file:
             deaths=row["deaths"],
             icu_occupation=row['icu_occupation'],
             vaccination_rate=row['vaccination_rate'],
-            positivity_rate=row['positivity_rate']
+            positivity_rate=row['positivity_rate'],
+            date=row['date']
         )
         db.add(db_record)
 
