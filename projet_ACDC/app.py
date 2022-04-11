@@ -41,7 +41,7 @@ def main():
     return RedirectResponse(url="/docs/")
 
 
-@app.get("/departments/", response_model=List[schemas.Region])
+@app.get("/Region/", response_model=List[schemas.Region])
 def show_records(db: Session = Depends(get_db)):
     Region = db.query(models.Region).all()
     return Region
