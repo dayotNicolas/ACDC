@@ -36,30 +36,25 @@ def get_db():
         db.close()
 
 
-@app.get("/")
-def main():
-    return RedirectResponse(url="/docs/")
-
-
-@app.get("/Region/", response_model=List[schemas.Region])
-def show_records(db: Session = Depends(get_db)):
-    Region = db.query(models.Region).all()
-    return Region
-
-
-@app.get("/plots/", response_class=HTMLResponse)
-def read_notes(request: Request, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    departments = db.query(models.Region).all()
-    print(departments)
-    return templates.TemplateResponse("plots.html", {
-        "request": request,
-        "departments": Region
+@app.get("/", response_class=HTMLResponse)
+def main(request: Request):
+    return templates.TemplateResponse("base.html", {
+        "request": request
     })
 
 
-@app.get("/deaths_data/")
+@app.get("/regions/", response_class=HTMLResponse)
+async def read_notes(request: Request, db: Session = Depends(get_db)):
+    regions = db.query(models.Region).all()
+
+    return templates.TemplateResponse("plots.html", {
+        "request": request,
+        "regions": regions
+    })
+
+
+@app.post("/deaths_data/")
 def put_data_in_db():
-    create_database()
     middleware_deces_age()
 
 

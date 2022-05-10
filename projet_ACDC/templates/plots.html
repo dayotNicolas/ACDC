@@ -1,6 +1,9 @@
-<h1>ok ça marche</h1>
-{% for department in departments %}
-<div class="thread">
-  <div class="thread__op">{{ region.name }}</div>
-</div>
-{% endfor %}
+{% extends "base.html" %}
+{% block title %}Region{% endblock %}
+{% block content %}
+    {% for region in regions %}
+        <div class="thread">
+          <div class="thread__op">{{ region.name }}</div>
+        </div>
+    {% endfor %}
+{% endblock %}
