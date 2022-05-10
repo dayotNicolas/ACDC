@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        <title>AC/DC project</title>
+    {% endblock %}
+</head>
+<body>
+    <div id="header">
+        <ul id="navigation">
+            <li><a href="/">Accueil</a></li>
+            <li><a href="/plots/">Plots</a></li>
+        </ul>
+        {% block base %}
+            <h1>Welcome in AC / DC Project</h1>
+            <h3>By <small>Nicolas Dayot, Samuel Adone & Marie Dugoua</small></h3>
+        {% endblock %}
+    </div>
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+    <div id="footer">
+        {% block footer %}
+        &copy; Copyright 2008 by <a href="http://domain.invalid/">you</a>.
+        {% endblock %}
+    </div>
+</body>
+</html>
