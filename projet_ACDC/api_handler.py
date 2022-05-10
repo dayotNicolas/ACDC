@@ -32,7 +32,7 @@ def middleware_deces_age():
     models.Base.metadata.create_all(bind=engine)
     with open('datas/JSON/deces_age_region.json') as json_file:
         data = json.load(json_file)
-
+        print(data)
         for Column in data:
             db_record = models.DeathAgeRegion(
                 region_id=Column["reg"],
