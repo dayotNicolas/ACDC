@@ -8,7 +8,7 @@ Donnez d'abord les droits d'execution a votre fichier :
 Puis lancez la commande ```bash```  qui suit (linux/mac os) :
 ```./require.sh```
 
-Ou pour windows:
-```./require.ps1```
+Ou directement en ligne de commande python:
+```./require.py```
 
 

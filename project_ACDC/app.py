@@ -38,7 +38,7 @@ def get_db():
 
 @app.get("/", response_class=HTMLResponse)
 def main(request: Request):
-    return templates.TemplateResponse("base.html", {
+    return templates.TemplateResponse("accueil.html", {
         "request": request
     })
 
