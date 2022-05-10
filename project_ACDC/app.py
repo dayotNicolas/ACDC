@@ -47,13 +47,13 @@ def main(request: Request):
 async def read_notes(request: Request, db: Session = Depends(get_db)):
     regions = db.query(models.Region).all()
 
-    return templates.TemplateResponse("plots.html", {
+    return templates.TemplateResponse("regions.html", {
         "request": request,
         "regions": regions
     })
 
 
-@app.post("/deaths_data/")
+@app.post("/data_db/")
 def put_data_in_db():
     middleware_deces_age()
 
