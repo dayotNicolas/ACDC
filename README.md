@@ -11,10 +11,6 @@ Analyse Convergente des Données du Covid
 
 ```python Retriever.py```
 
-- Migrer les données dans la base
-
-```  ```
-
 ### Lancer le projet
 ```uvicorn app:app --reload  ```
 
