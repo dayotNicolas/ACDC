@@ -49,16 +49,17 @@ def show_records(db: Session = Depends(get_db)):
 
 @app.get("/plots/", response_class=HTMLResponse)
 def read_notes(request: Request, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    departments = db.query(models.Departments).all()
+    departments = db.query(models.Region).all()
     print(departments)
     return templates.TemplateResponse("plots.html", {
         "request": request,
-        "departments": departments
+        "departments": Region
     })
 
 
-@app.post("/deaths_data/")
+@app.get("/deaths_data/")
 def put_data_in_db():
+    create_database()
     middleware_deces_age()
 
 

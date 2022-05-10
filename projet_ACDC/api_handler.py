@@ -33,12 +33,12 @@ def middleware_deces_age():
     with open('datas/JSON/deces_age_region.json') as json_file:
         data = json.load(json_file)
 
-        for row, value in data:
+        for Column in data:
             db_record = models.DeathAgeRegion(
-                region_id=row.value["reg"],
-                cl_age90=row.value["cl_age90"],
-                deaths_covid=row.value["Dc_Elec_Covid_cum"],
-                date=row.value["jour"]
+                region_id=Column["reg"],
+                cl_age90=Column["cl_age90"],
+                deaths_covid=Column["Dc_Elec_Covid_cum"],
+                date=Column["jour"]
             )
             db.add(db_record)
         db.commit()
