@@ -56,7 +56,9 @@ async def read_notes(request: Request, db: Session = Depends(get_db)):
 @app.get("/data_db/")
 def put_data_in_db():
     middleware_deces_age()
-
+    middleware_hospitalisation_age()
+    middleware_professional_vaccin_percentage_department()
+    middleware_vaccination_rate()
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=9856)

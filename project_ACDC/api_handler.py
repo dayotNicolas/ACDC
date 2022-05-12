@@ -56,8 +56,8 @@ def middleware_hospitalisation_age():
             print(Column[0], type(int(Column[1]['reg'])))
             db_record = models.DeathAgeRegion(
                 region_id=int(Column[1]["reg"]),
-                cl_age90=int(Column[1]["cl_age90"]),
                 week=str(Column[1]["Semaine"]),
+                cl_age90=int(Column[1]["cl_age90"]),
                 new_admission_hospitals=int(Column[1]["NewAdmHospit"])
             )
             db.add(db_record)
