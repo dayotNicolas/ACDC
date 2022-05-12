@@ -1,13 +1,13 @@
-import subprocess as sp
+from subprocess import Popen, PIPE
 
 import schedule
-import popen as p
 from api_handler import *
 
-sp.Popen("uvicorn project_ACDC.app:app",shell=True)
+p = Popen("uvicorn project_ACDC.app:app ", shell=True, stdout=PIPE)
 
+stderr = p.communicate()
 if __name__ == '__main__':
-    schedule.every(24).hours.do(middleware_deces_age)
-    schedule.every(24).hours.do(middleware_professional_vaccin_percentage_department)
-    schedule.every(24).hours.do(middleware_hospitalisation_age)
-    schedule.every(24).hours.do(middleware_vaccination_rate)
+    schedule.every().day.at("00:00").do(middleware_deces_age)
+    schedule.every().day.at("00:00").do(middleware_professional_vaccin_percentage_department)
+    schedule.every().day.at("00:00").do(middleware_hospitalisation_age)
+    schedule.every().day.at("00:00").do(middleware_vaccination_rate)
