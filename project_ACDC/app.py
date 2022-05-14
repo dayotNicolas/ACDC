@@ -53,7 +53,7 @@ async def read_notes(request: Request, db: Session = Depends(get_db)):
     })
 
 
-@app.post("/data_db/")
+@app.get("/data_db/")
 def put_data_in_db():
     middleware_deces_age()
 
