@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Region{% endblock %}
+{% block content %}
+     <div class="thread" style="display: flex; flex-direction: column; flex-wrap: wrap !important; max-height: 100%" >
+    {% for region in regions %}
+         <div class="thread__op ">{{ region.name }} -- {{ region.region_number }}</div>
+    {% endfor %}
+      </div>
+{% endblock %}
