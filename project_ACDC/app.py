@@ -1,5 +1,6 @@
 from typing import List
 
+import requests
 import uvicorn
 from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -91,7 +92,7 @@ async def vaccinPercentage(request: Request, db: Session = Depends(get_db)):
         "vaccinPercentages": vaccinPercentages
     })
 
-
+'''
 @app.get("/vaccinationRate/", response_class=HTMLResponse)
 async def vaccinationRate(request: Request, db: Session = Depends(get_db)):
     vaccinationRate = db.query(models.VaccinationRate).all()
@@ -100,14 +101,15 @@ async def vaccinationRate(request: Request, db: Session = Depends(get_db)):
         "request": request,
         "vaccinationRats": vaccinationRate
     })
-
+'''
 
 @app.get("/data_db/")
 def put_data_in_db():
     middleware_deces_age()
     middleware_hospitalisation_age()
     middleware_professional_vaccin_percentage_department()
-    middleware_vaccination_rate()
+    #middleware_vaccination_rate()
+    return requests.codes.ok
 
 
 if __name__ == "__main__":
