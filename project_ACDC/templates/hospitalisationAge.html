@@ -1,9 +1,115 @@
-{% extends "base.html" %}
-{% block title %}Hospitalisation Age{% endblock %}
-{% block content %}
-    {% for region in regions %}
-        <div class="thread">
-
+<!Doctype html>
+<html>
+    <head>
+        <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js">
+        </script>
+    <script  src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js">
+    </script>
+    </head>
+    <body>
+    {% extends "base.html" %}
+    {% block title %}death per Department{% endblock %}
+    {% block content %}
+        <div id="gironde">
+            <canvas id="myChart" width="400" height="250"></canvas>
         </div>
-    {% endfor %}
-{% endblock %}
+        <div id="Bouches-du-Rhône">
+            <canvas id="myChart2" width="400" height="250"></canvas>
+        </div>
+        <div id="Haut de seine">
+            <canvas id="myChart3" width="400" height="250"></canvas>
+        </div>
+<script>
+const ctx1 = document.getElementById('myChart').getContext('2d');
+const ctx2 = document.getElementById('myChart2').getContext('2d');
+const ctx3 = document.getElementById('myChart3').getContext('2d');
+var data1 = []
+var labels1 = []
+var data2 = []
+var labels2 = []
+var data3 = []
+var labels3 = []
+{% for hospit in hospitalisations %}
+    {% if  hospit.region_id == 75 and hospit.cl_age90 >= 59 %}
+        labels1.push({{ hospit.week | tojson | safe}})
+        data1.push({{ hospit.new_admission_hospitals | tojson | safe}})
+    {% endif %}
+    {% if  hospit.region_id == 75 and hospit.cl_age90 >= 29 and hospit.cl_age90 < 59 %}
+        labels2.push({{ hospit.week | tojson | safe}})
+        data2.push({{ hospit.new_admission_hospitals | tojson | safe}})
+    {% endif %}
+    {% if  hospit.region_id == 75 and hospit.cl_age90 < 29 %}
+        labels3.push({{ hospit.week | tojson | safe}})
+        data3.push({{ hospit.new_admission_hospitals | tojson | safe}})
+    {% endif %}
+{% endfor %}
+console.log(labels1)
+const myChart = new Chart(ctx1, {
+    type: 'bar',
+    data: {
+        labels: labels1,
+        datasets: [{
+            label: 'évolution des hositalisations des plus de 60 ans sur Paris',
+            data: data1,
+                fill: false,
+            backgroundColor: 'rgb(75, 192, 192)',
+            borderColor: 'rgb(75, 192, 192)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+const myChart2 = new Chart(ctx2, {
+    type: 'bar',
+    data: {
+        labels: labels2,
+        datasets: [{
+            label: "évolution des hospitalisations de la tranche des 20 - 60 ans sur Paris",
+            data: data2,
+                fill: false,
+            backgroundColor: 'rgb(75, 192, 192)',
+            borderColor: 'rgb(75, 192, 192)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+const myChart3 = new Chart(ctx3, {
+    type: 'bar',
+    data: {
+        labels: labels3,
+        datasets: [{
+            label: 'évolution des hospitalisations des moins de 20 ans sur Paris',
+            data: data3,
+                fill: false,
+            backgroundColor: 'rgb(75, 192, 192)',
+            borderColor: 'rgb(75, 192, 192)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+    {% endblock %}
+    <script type="text/javascript" src="utility.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+    </body>
+</html>

@@ -55,11 +55,13 @@ async def regions(request: Request, db: Session = Depends(get_db)):
 
 @app.get("/hospitalisation/", response_class=HTMLResponse)
 async def hospitalisation(request: Request, db: Session = Depends(get_db)):
-    hospitalisation = db.query(models.HospitalisationAge).all()
-
+    hospitalisations = []
+    for u in db.query(models.HospitalisationAge).all():
+        u.__dict__.pop('_sa_instance_state', None)
+        hospitalisations.append(u.__dict__)
     return templates.TemplateResponse("hospitalisationAge.html", {
         "request": request,
-        "hospitalisations": hospitalisation
+        "hospitalisations": hospitalisations
     })
 
 
