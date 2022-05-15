@@ -75,11 +75,16 @@ async def death(request: Request, db: Session = Depends(get_db)):
 
 @app.get("/vaccinPercentage/", response_class=HTMLResponse)
 async def vaccinPercentage(request: Request, db: Session = Depends(get_db)):
-    vaccinPercentage = db.query(models.ProfessionalVaccinPercentageDepartment).all()
-
+    vaccinPercentages = []
+    i = 0
+    for u in db.query(models.ProfessionalVaccinPercentageDepartment).all():
+        u.__dict__.pop('_sa_instance_state', None)
+        u.__dict__['date'] = u.__dict__['date'].strftime("%m/%d/%Y")
+        vaccinPercentages.append(u.__dict__)
+    #print(vaccinPercentages)
     return templates.TemplateResponse("professionalVaccinPercentageDepartment.html", {
         "request": request,
-        "vaccinPercentages": vaccinPercentage
+        "vaccinPercentages": vaccinPercentages
     })
 
 

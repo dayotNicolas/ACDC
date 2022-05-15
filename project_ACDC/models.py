@@ -1,3 +1,5 @@
+import json
+
 from sqlalchemy import Column, Integer, String, ForeignKey, Float
 from sqlalchemy.types import Date
 from database import Base

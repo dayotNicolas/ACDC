@@ -44,7 +44,6 @@ class ProfessionalVaccinPercentageDepartment(BaseModel):
     class Config:
         orm_mode = True
 
-
 class VaccinationRate(BaseModel):
     id: int
     region_id: int
