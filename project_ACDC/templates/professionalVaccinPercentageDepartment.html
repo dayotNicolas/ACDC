@@ -10,29 +10,86 @@
     {% extends "base.html" %}
     {% block title %}Professional Percentage Department{% endblock %}
     {% block content %}
-        <canvas id="myChart" width="400" height="250"></canvas>
+        <div id="gironde">
+            <canvas id="myChart" width="400" height="250"></canvas>
+        </div>
+        <div id="Bouches-du-Rhône">
+            <canvas id="myChart2" width="400" height="250"></canvas>
+        </div>
+        <div id="Haut de seine">
+            <canvas id="myChart3" width="400" height="250"></canvas>
+        </div>
 <script>
-const ctx = document.getElementById('myChart').getContext('2d');
-var data = []
-var labels = []
+const ctx1 = document.getElementById('myChart').getContext('2d');
+const ctx2 = document.getElementById('myChart2').getContext('2d');
+const ctx3 = document.getElementById('myChart3').getContext('2d');
+var data1 = []
+var labels1 = []
+var data2 = []
+var labels2 = []
+var data3 = []
+var labels3 = []
 {% for vaccinPercentage in vaccinPercentages %}
-    {% if  vaccinPercentage.region_id == 1  %}
-        labels.push({{ vaccinPercentage.date | tojson | safe}})
+    {% if  vaccinPercentage.region_id == 33  %}
+        labels1.push({{ vaccinPercentage.date | tojson | safe}})
+        data1.push({{ vaccinPercentage.dose_completed | tojson | safe}})
+    {% endif %}
+    {% if  vaccinPercentage.region_id == 13  %}
+        labels2.push({{ vaccinPercentage.date | tojson | safe}})
+        data2.push({{ vaccinPercentage.dose_completed | tojson | safe}})
+    {% endif %}
+    {% if  vaccinPercentage.region_id == 75  %}
+        labels3.push({{ vaccinPercentage.date | tojson | safe}})
+        data3.push({{ vaccinPercentage.dose_completed | tojson | safe}})
     {% endif %}
 {% endfor %}
-console.log(labels)
-{% for vaccinPercentage in vaccinPercentages %}
-    {% if  vaccinPercentage.region_id == 1  %}
-        data.push({{ vaccinPercentage.dose_completed | tojson | safe}})
-    {% endif %}
-{% endfor %}
-const myChart = new Chart(ctx, {
+const myChart = new Chart(ctx1, {
     type: 'line',
     data: {
-        labels: labels,
+        labels: labels1,
         datasets: [{
-            label: 'évolution du pourcentage de professionnels vaccinés',
-            data: data,
+            label: 'évolution du pourcentage de professionnels vaccinés de la Gironde',
+            data: data1,
+                fill: false,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: false
+            }
+        }
+    }
+});
+const myChart2 = new Chart(ctx2, {
+    type: 'line',
+    data: {
+        labels: labels2,
+        datasets: [{
+            label: 'évolution du pourcentage de professionnels vaccinés des Bouches-du-Rhône',
+            data: data2,
+                fill: false,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: false
+            }
+        }
+    }
+});
+const myChart3 = new Chart(ctx3, {
+    type: 'line',
+    data: {
+        labels: labels3,
+        datasets: [{
+            label: 'évolution du pourcentage de professionnels vaccinés de Paris',
+            data: data3,
                 fill: false,
             borderColor: 'rgb(75, 192, 192)',
             tension: 0.1

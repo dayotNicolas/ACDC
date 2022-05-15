@@ -1,9 +1,115 @@
-{% extends "base.html" %}
-{% block title %}Death Age Region{% endblock %}
-{% block content %}
-    {% for region in regions %}
-        <div class="thread">
-
+<!Doctype html>
+<html>
+    <head>
+        <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js">
+        </script>
+    <script  src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js">
+    </script>
+    </head>
+    <body>
+    {% extends "base.html" %}
+    {% block title %}death per Department{% endblock %}
+    {% block content %}
+        <div id="gironde">
+            <canvas id="myChart" width="400" height="250"></canvas>
         </div>
-    {% endfor %}
-{% endblock %}
+        <div id="Bouches-du-Rhône">
+            <canvas id="myChart2" width="400" height="250"></canvas>
+        </div>
+        <div id="Haut de seine">
+            <canvas id="myChart3" width="400" height="250"></canvas>
+        </div>
+<script>
+const ctx1 = document.getElementById('myChart').getContext('2d');
+const ctx2 = document.getElementById('myChart2').getContext('2d');
+const ctx3 = document.getElementById('myChart3').getContext('2d');
+var data1 = []
+var labels1 = []
+var data2 = []
+var labels2 = []
+var data3 = []
+var labels3 = []
+{% for death in deaths %}
+    {% if  death.region_id == 75  %}
+        labels1.push({{ death.date | tojson | safe}})
+        data1.push({{ death.deaths_covid | tojson | safe}})
+    {% endif %}
+    {% if  death.region_id == 27 %}
+        labels2.push({{ death.date | tojson | safe}})
+        data2.push({{ death.deaths_covid | tojson | safe}})
+    {% endif %}
+    {% if  death.region_id == 93  %}
+        labels3.push({{ death.date | tojson | safe}})
+        data3.push({{ death.deaths_covid | tojson | safe}})
+    {% endif %}
+{% endfor %}
+console.log(labels1)
+const myChart = new Chart(ctx1, {
+    type: 'line',
+    data: {
+        labels: labels1,
+        datasets: [{
+            label: 'évolution des décès de Paris',
+            data: data1,
+                fill: false,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: false
+            }
+        }
+    }
+});
+const myChart2 = new Chart(ctx2, {
+    type: 'line',
+    data: {
+        labels: labels2,
+        datasets: [{
+            label: "évolution des décès dans l'Eure",
+            data: data2,
+                fill: false,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: false
+            }
+        }
+    }
+});
+const myChart3 = new Chart(ctx3, {
+    type: 'line',
+    data: {
+        labels: labels3,
+        datasets: [{
+            label: 'évolution des décès des Hauts-de-Seine',
+            data: data3,
+                fill: false,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: false
+            }
+        }
+    }
+});
+</script>
+        {% for death in deaths %}
+            <div class="thread__op ">{{ death.date }}</div>
+        {% endfor %}
+    {% endblock %}
+    <script type="text/javascript" src="utility.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+    </body>
+</html>

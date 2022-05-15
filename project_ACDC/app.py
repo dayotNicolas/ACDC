@@ -65,23 +65,25 @@ async def hospitalisation(request: Request, db: Session = Depends(get_db)):
 
 @app.get("/death/", response_class=HTMLResponse)
 async def death(request: Request, db: Session = Depends(get_db)):
-    death = db.query(models.DeathAgeRegion).all()
-
+    deaths = []
+    for u in db.query(models.DeathAgeRegion).all():
+        u.__dict__.pop('_sa_instance_state', None)
+        u.__dict__['date'] = u.__dict__['date'].strftime("%m/%d/%Y")
+        deaths.append(u.__dict__)
+    deaths.sort(key = lambda x:x['date'])
     return templates.TemplateResponse("deathAgeRegion.html", {
         "request": request,
-        "deaths": death
+        "deaths": deaths
     })
 
 
 @app.get("/vaccinPercentage/", response_class=HTMLResponse)
 async def vaccinPercentage(request: Request, db: Session = Depends(get_db)):
     vaccinPercentages = []
-    i = 0
     for u in db.query(models.ProfessionalVaccinPercentageDepartment).all():
         u.__dict__.pop('_sa_instance_state', None)
         u.__dict__['date'] = u.__dict__['date'].strftime("%m/%d/%Y")
         vaccinPercentages.append(u.__dict__)
-    #print(vaccinPercentages)
     return templates.TemplateResponse("professionalVaccinPercentageDepartment.html", {
         "request": request,
         "vaccinPercentages": vaccinPercentages
